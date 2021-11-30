@@ -18,11 +18,6 @@
 #include "val_crypto.h"
 
 #include "test_crypto_common.h"
-typedef struct {
-    psa_key_derivation_step_t  step;
-    const uint8_t             *data;
-    size_t                     data_length;
-} key_derivation_input_t;
 
 typedef struct {
     char                        test_desc[75];
@@ -39,7 +34,6 @@ typedef struct {
     size_t                      derive_key_bits;
     psa_key_usage_t             derive_usage;
     psa_algorithm_t             derive_key_alg;
-    key_derivation_input_t      info;
     psa_status_t                expected_status;
 } test_data;
 
@@ -52,14 +46,8 @@ static const test_data check1[] = {
  PSA_KEY_DERIVATION_INPUT_SECRET, 32, {0}, 0,
  PSA_KEY_TYPE_AES, BYTES_TO_BITS(AES_32B_KEY_SIZE), PSA_KEY_USAGE_EXPORT,
  PSA_ALG_CTR,
- {
-   .step        = PSA_KEY_DERIVATION_INPUT_INFO,
-   .data        = input_info,
-   .data_length = INPUT_INFO_LEN
- },
  PSA_SUCCESS
 },
-#if 0
 {"Test psa_key_derivation_output_key - Info\n", PSA_KEY_TYPE_DERIVE,
 {0x49, 0x8E, 0xC7, 0x7D, 0x01, 0x95, 0x0D, 0x94, 0x2C, 0x16, 0xA5, 0x3E, 0x99,
  0x5F, 0xC9, 0x77},
@@ -81,7 +69,7 @@ static const test_data check1[] = {
  PSA_ALG_CTR,
  PSA_SUCCESS
 },
-
+#ifdef IS_DES_SUPPORTED
 {"Test psa_key_derivation_output_key - DES key export\n", PSA_KEY_TYPE_DERIVE,
 {0x49, 0x8E, 0xC7, 0x7D, 0x01, 0x95, 0x0D, 0x94, 0x2C, 0x16, 0xA5, 0x3E, 0x99,
  0x5F, 0xC9, 0x77},
@@ -92,7 +80,7 @@ static const test_data check1[] = {
  PSA_ALG_CTR,
  PSA_SUCCESS
 },
-
+#endif
 {"Test psa_key_derivation_output_key - Greater Capacity than available\n", PSA_KEY_TYPE_DERIVE,
 {0x49, 0x8E, 0xC7, 0x7D, 0x01, 0x95, 0x0D, 0x94, 0x2C, 0x16, 0xA5, 0x3E, 0x99,
  0x5F, 0xC9, 0x77},
@@ -103,7 +91,6 @@ static const test_data check1[] = {
  PSA_ALG_CTR,
  PSA_ERROR_INSUFFICIENT_DATA
 },
-
 {"Test psa_key_derivation_output_key - ECC Public key\n", PSA_KEY_TYPE_DERIVE,
 {0x49, 0x8E, 0xC7, 0x7D, 0x01, 0x95, 0x0D, 0x94, 0x2C, 0x16, 0xA5, 0x3E, 0x99,
  0x5F, 0xC9, 0x77},
@@ -112,7 +99,7 @@ static const test_data check1[] = {
  PSA_KEY_DERIVATION_INPUT_SECRET, 256, {0}, 0,
  PSA_KEY_TYPE_ECC_PUBLIC_KEY(PSA_ECC_FAMILY_SECP_R1), 256, PSA_KEY_USAGE_EXPORT,
  PSA_ALG_ECDSA_ANY,
- PSA_ERROR_NOT_SUPPORTED
+ PSA_ERROR_INVALID_ARGUMENT
 },
 
 {"Test psa_key_derivation_output_key -  ECC keypair\n", PSA_KEY_TYPE_DERIVE,
@@ -123,7 +110,7 @@ static const test_data check1[] = {
  PSA_KEY_DERIVATION_INPUT_SECRET, 224, {0}, 0,
  PSA_KEY_TYPE_ECC_KEY_PAIR(PSA_ECC_FAMILY_SECP_R1), 224, PSA_KEY_USAGE_EXPORT,
  PSA_ALG_ECDSA_ANY,
- PSA_SUCCESS
+ PSA_ERROR_INVALID_ARGUMENT
 },
 
 {"Test psa_key_derivation_output_key -  RSA Public Key", PSA_KEY_TYPE_DERIVE,
@@ -134,7 +121,7 @@ static const test_data check1[] = {
  PSA_KEY_DERIVATION_INPUT_SECRET, 256, {0}, 0,
  PSA_KEY_TYPE_RSA_PUBLIC_KEY, 2048, PSA_KEY_USAGE_EXPORT,
  PSA_ALG_RSA_PKCS1V15_SIGN_RAW,
- PSA_ERROR_NOT_SUPPORTED,
+ PSA_ERROR_INVALID_ARGUMENT
 },
 
 {"Test psa_key_derivation_output_key -  RSA keypair\n", PSA_KEY_TYPE_DERIVE,
@@ -145,7 +132,7 @@ static const test_data check1[] = {
  PSA_KEY_DERIVATION_INPUT_SECRET, 256, {0}, 0,
  PSA_KEY_TYPE_ECC_KEY_PAIR(PSA_ECC_FAMILY_SECP_R1), 2046, PSA_KEY_USAGE_EXPORT,
  PSA_ALG_RSA_PKCS1V15_SIGN_RAW,
- PSA_SUCCESS
+ PSA_ERROR_INVALID_ARGUMENT
 },
 
 {"Test psa_key_derivation_output_key - Invalid key size\n", PSA_KEY_TYPE_DERIVE,
@@ -156,7 +143,6 @@ static const test_data check1[] = {
  PSA_KEY_DERIVATION_INPUT_SECRET, 32, {0}, 0,
  PSA_KEY_TYPE_AES, BYTES_TO_BITS(AES_18B_KEY_SIZE), PSA_KEY_USAGE_EXPORT,
  PSA_ALG_CTR,
- PSA_ERROR_NOT_SUPPORTED
+ PSA_ERROR_INVALID_ARGUMENT
 },
-#endif
 };

@@ -105,15 +105,21 @@ static const test_data check1[] = {
 #ifdef ARCH_TEST_RSA
 #ifdef ARCH_TEST_RSA_2048
 #ifdef ARCH_TEST_RSA_PKCS1V15_SIGN_RAW
+#ifndef ARCH_TEST_SKIP_RSA_2048_GEN_KEY
 {
     .test_desc       = "Test psa_generate_key with RSA 2048 Keypair\n",
     .type            = PSA_KEY_TYPE_RSA_KEY_PAIR,
-    .usage_flags     = PSA_KEY_USAGE_EXPORT | PSA_KEY_USAGE_SIGN_HASH | PSA_KEY_USAGE_VERIFY_HASH,
+    .usage_flags     = PSA_KEY_USAGE_EXPORT | PSA_KEY_USAGE_SIGN_HASH | PSA_KEY_USAGE_VERIFY_HASH \
+	                   | PSA_KEY_USAGE_SIGN_MESSAGE | PSA_KEY_USAGE_VERIFY_MESSAGE,
     .alg             = PSA_ALG_RSA_PKCS1V15_SIGN_RAW,
     .bits            = 2048,
-    .expected_range  = {1190, 1194},
+    .expected_range  = {1, (MIN(PSA_EXPORT_KEY_OUTPUT_SIZE(\
+	                    PSA_KEY_TYPE_RSA_KEY_PAIR, 2048), \
+                        PSA_EXPORT_KEY_PAIR_MAX_SIZE))},
+
     .expected_status = PSA_SUCCESS
 },
+#endif
 #endif
 #endif
 #endif
@@ -137,10 +143,13 @@ static const test_data check1[] = {
 {
     .test_desc       = "Test psa_generate_key with RSA 2048 Public key\n",
     .type            = PSA_KEY_TYPE_RSA_PUBLIC_KEY,
-    .usage_flags     = PSA_KEY_USAGE_EXPORT | PSA_KEY_USAGE_SIGN_HASH | PSA_KEY_USAGE_VERIFY_HASH,
+    .usage_flags     = PSA_KEY_USAGE_EXPORT | PSA_KEY_USAGE_SIGN_HASH | PSA_KEY_USAGE_VERIFY_HASH \
+	                   | PSA_KEY_USAGE_SIGN_MESSAGE | PSA_KEY_USAGE_VERIFY_MESSAGE,
     .alg             = PSA_ALG_RSA_PKCS1V15_SIGN_RAW,
     .bits            = 2048,
-    .expected_range  = {1190, 1194},
+    .expected_range  = {1, BITS_TO_BYTES(MIN(PSA_EXPORT_KEY_OUTPUT_SIZE(\
+	                    PSA_KEY_TYPE_RSA_PUBLIC_KEY, 2048), \
+                        PSA_EXPORT_PUBLIC_KEY_MAX_SIZE))},
     .expected_status = PSA_ERROR_NOT_SUPPORTED
 },
 #endif

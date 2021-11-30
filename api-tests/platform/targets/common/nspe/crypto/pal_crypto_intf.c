@@ -21,6 +21,8 @@
 #define  PAL_KEY_SLOT_COUNT  32
 
 int pal_system_reset(void);
+psa_key_id_t g_global_key_array[PAL_KEY_SLOT_COUNT];
+uint8_t g_key_count;
 
 /**
     @brief    - This API will call the requested crypto function
@@ -60,7 +62,8 @@ int32_t pal_crypto_function(int type, va_list valist)
     size_t                                    nonce_length;
     const uint8_t                            *additional_data;
     size_t                                    additional_data_length;
-#if HOST_GCC_MISSING_CRYPTO_1_0 == 0
+    psa_status_t                              status;
+#if MISSING_CRYPTO_1_0 == 0
     uint8_t                                  *output1;
     size_t                                   output_size1, *p_output_length1;
 #endif
@@ -116,7 +119,7 @@ int32_t pal_crypto_function(int type, va_list valist)
 									output_size,
 									p_output_length);
 			break;
-#if HOST_GCC_MISSING_CRYPTO_1_0 == 0
+#if MISSING_CRYPTO_1_0 == 0
 		case PAL_CRYPTO_AEAD_ABORT:
 			aead_operation           = va_arg(valist, psa_aead_operation_t *);
 			return psa_aead_abort(aead_operation);
@@ -267,7 +270,7 @@ int32_t pal_crypto_function(int type, va_list valist)
 			cipher_operation         =  va_arg(valist, psa_cipher_operation_t *);
 			return psa_cipher_abort(cipher_operation);
 			break;
-#if HOST_GCC_MISSING_CRYPTO_1_0 == 0
+#if MISSING_CRYPTO_1_0 == 0
 		case PAL_CRYPTO_CIPHER_DECRYPT:
 			key                      = va_arg(valist, psa_key_id_t);
 			alg                      = va_arg(valist, psa_algorithm_t);
@@ -293,7 +296,7 @@ int32_t pal_crypto_function(int type, va_list valist)
 											key,
 											alg);
 			break;
-#if HOST_GCC_MISSING_CRYPTO_1_0 == 0
+#if MISSING_CRYPTO_1_0 == 0
 		case PAL_CRYPTO_CIPHER_ENCRYPT:
 			key                      = va_arg(valist, psa_key_id_t);
 			alg                      = va_arg(valist, psa_algorithm_t);
@@ -372,9 +375,11 @@ int32_t pal_crypto_function(int type, va_list valist)
 			key                      = va_arg(valist, psa_key_id_t);
 			c_attributes             = va_arg(valist, const psa_key_attributes_t *);
 			target_key               = va_arg(valist, psa_key_id_t *);
-			return psa_copy_key(key,
+			status = psa_copy_key(key,
 								c_attributes,
 								target_key);
+			g_global_key_array[g_key_count++] = *target_key;
+                        return status;
 			break;
 		case PAL_CRYPTO_INIT:
 			return psa_crypto_init();
@@ -406,8 +411,9 @@ int32_t pal_crypto_function(int type, va_list valist)
 		case PAL_CRYPTO_GENERATE_KEY:
 			c_attributes             = va_arg(valist, const psa_key_attributes_t *);
 			target_key               = va_arg(valist, psa_key_id_t *);
-			return psa_generate_key(c_attributes,
-									target_key);
+			status =  psa_generate_key(c_attributes, target_key);
+                        g_global_key_array[g_key_count++] = *target_key;
+                        return status;
 			break;
 		case PAL_CRYPTO_GENERATE_RANDOM:
 			output                   = va_arg(valist, uint8_t *);
@@ -557,10 +563,12 @@ int32_t pal_crypto_function(int type, va_list valist)
 			input                    = va_arg(valist, const uint8_t *);
 			input_length             = va_arg(valist, size_t);
 			p_key                    = va_arg(valist, psa_key_id_t *);
-			return psa_import_key(c_attributes,
+			status = psa_import_key(c_attributes,
 								  input,
 								  input_length,
 								  p_key);
+			g_global_key_array[g_key_count++] = *p_key;
+			return status;
 			break;
 		case PAL_CRYPTO_KEY_ATTRIBUTES_INIT:
 			attributes               = va_arg(valist, psa_key_attributes_t *);
@@ -648,7 +656,6 @@ int32_t pal_crypto_function(int type, va_list valist)
 			mac_operation            = va_arg(valist, psa_mac_operation_t *);
 			return psa_mac_abort(mac_operation);
 			break;
-#ifdef CRYPTO_1_0
 		case PAL_CRYPTO_MAC_COMPUTE:
 			key                      = va_arg(valist, psa_key_id_t);
 			alg                      = va_arg(valist, psa_algorithm_t);
@@ -665,7 +672,6 @@ int32_t pal_crypto_function(int type, va_list valist)
 								   output_size,
 								   p_output_length);
 			break;
-#endif
 		case PAL_CRYPTO_MAC_OPERATION_INIT:
 			mac_operation            = va_arg(valist, psa_mac_operation_t *);
 			mac_operation_temp       = psa_mac_operation_init();
@@ -699,7 +705,7 @@ int32_t pal_crypto_function(int type, va_list valist)
 								  input,
 								  input_length);
 			break;
-#if HOST_GCC_MISSING_CRYPTO_1_0 == 0
+#if MISSING_CRYPTO_1_0 == 0
 		case PAL_CRYPTO_MAC_VERIFY:
 			key                      = va_arg(valist, psa_key_id_t);
 			alg                      = va_arg(valist, psa_algorithm_t);
@@ -814,7 +820,6 @@ int32_t pal_crypto_function(int type, va_list valist)
 								 output_size,
 								 p_output_length);
 			break;
-#ifdef CRYPTO_1_0
 		case PAL_CRYPTO_SIGN_MESSAGE:
 			key                      = va_arg(valist, psa_key_id_t);
 			alg                      = va_arg(valist, psa_algorithm_t);
@@ -845,7 +850,6 @@ int32_t pal_crypto_function(int type, va_list valist)
 									  input1,
 									  input_length1);
 			break;
-#endif
 		case PAL_CRYPTO_VERIFY_HASH:
 			key                      = va_arg(valist, psa_key_id_t);
 			alg                      = va_arg(valist, psa_algorithm_t);
@@ -864,8 +868,11 @@ int32_t pal_crypto_function(int type, va_list valist)
 			return pal_system_reset();
 			break;
 		case PAL_CRYPTO_FREE:
-			for (int i = 0; i < PAL_KEY_SLOT_COUNT; i++)
-				psa_destroy_key((psa_key_id_t)i);
+			for (int i = 0; i < g_key_count; i++) {
+				psa_destroy_key(g_global_key_array[i]);
+				g_global_key_array[i] = (psa_key_id_t)0;
+			}
+			g_key_count = 0;
 			return 0;
 			break;
 		default:
