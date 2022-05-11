@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2020, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2022, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,11 +23,11 @@
 extern val_api_t *val;
 extern psa_api_t *psa;
 
-int32_t server_test_psa_eoi_with_non_intr_signal(void);
+int32_t server_test_psa_eoi_with_unasserted_signal(void);
 
 const server_test_t test_i065_server_tests_list[] = {
     NULL,
-    server_test_psa_eoi_with_non_intr_signal,
+    server_test_psa_eoi_with_unasserted_signal,
     NULL,
 };
 
