@@ -1,5 +1,5 @@
 #/** @file
-# * Copyright (c) 2021, Arm Limited or its affiliates. All rights reserved.
+# * Copyright (c) 2021-2022, Arm Limited or its affiliates. All rights reserved.
 # * SPDX-License-Identifier : Apache-2.0
 # *
 # * Licensed under the Apache License, Version 2.0 (the "License");
@@ -86,7 +86,7 @@ test_i084, panic_test
 test_i085, panic_test
 test_i086, panic_test
 test_i087, panic_test
-test_l088
+test_i088
 test_i089, panic_test
 test_i090, panic_test
 
