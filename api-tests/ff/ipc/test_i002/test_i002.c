@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2018-2020, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2018-2022, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -258,6 +258,15 @@ int32_t client_test_spm_concurrent_connect_limit(caller_security_t caller __UNUS
    int             i= 0, signture = 0;
 
    val->print(PRINT_TEST, "[Check 7] Test connect limit\n", 0);
+
+   if (caller == CALLER_SECURE)
+   {
+	   status = val->set_boot_flag(BOOT_EXPECTED_S);
+	   if (VAL_ERROR(status))
+	   {
+		   return VAL_STATUS_ERROR;
+	   }
+   }
 
    /* Execute psa_connect in a loop until it returns
     * PSA_ERROR_CONNECTION_REFUSED OR PSA_ERROR_CONNECTION_BUSY
