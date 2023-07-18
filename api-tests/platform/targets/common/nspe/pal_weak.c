@@ -1,5 +1,6 @@
 /** @file
- * Copyright (c) 2022 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2023, Arm Limited or its affiliates. All rights reserved.
+ * Copyright 2023 NXP
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,23 +16,19 @@
  * limitations under the License.
 **/
 
-#ifndef PSA_ADAC_PLATFORM_H
-#define PSA_ADAC_PLATFORM_H
+#include "pal_common.h"
 
-#include <stdint.h>
-#include <stddef.h>
+__attribute__((weak)) void pal_set_custom_test_list(char *custom_test_list)
+{
+	(void)custom_test_list;
 
-#ifdef PSA_ADAC_PLATFORM_CONFIG_FILE
-#include PSA_ADAC_PLATFORM_CONFIG_FILE
-#else
-#include <psa_adac_platform.h>
-#endif
+	return;
+}
 
-#ifndef PSA_ADAC_PLATFORM_BANNER
-#define PSA_ADAC_PLATFORM_BANNER "PSA ADAC "
-#endif
+__attribute__((weak)) bool_t pal_is_test_enabled(test_id_t test_id)
+{
+	(void)test_id;
 
-void platform_init(void);
-void psa_adac_platform_init(void);
+	return 1;
+}
 
-#endif //PSA_ADAC_PLATFORM_H
