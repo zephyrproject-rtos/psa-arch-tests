@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2022 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2020-2023, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,9 +15,10 @@
  * limitations under the License.
 **/
 
-#ifndef PSA_ADAC_NATIVE_PSA_ADAC_PLATFORM_H
-#define PSA_ADAC_NATIVE_PSA_ADAC_PLATFORM_H
+#ifndef _PAL_STORAGE_CONFIG_H_
+#define _PAL_STORAGE_CONFIG_H_
 
-#define PSA_ADAC_MANAGER_IMPLICIT_TRANSPORT
+/* Platform specific max UID's size */
+#define ARCH_TEST_STORAGE_UID_MAX_SIZE 512
 
-#endif //PSA_ADAC_NATIVE_PSA_ADAC_PLATFORM_H
+#endif /* _PAL_STORAGE_CONFIG_H_ */
