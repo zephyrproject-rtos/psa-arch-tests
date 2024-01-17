@@ -271,6 +271,7 @@
 #define ARCH_TEST_SHA256
 #ifndef TF_M_PROFILE_SMALL
 #ifndef TF_M_PROFILE_MEDIUM
+/* disable the 384,512 as CC312 driver do not support it*/
 #ifdef CC312_LEGACY_DRIVER_API_ENABLED
 #define ARCH_TEST_SHA384
 #define ARCH_TEST_SHA512
