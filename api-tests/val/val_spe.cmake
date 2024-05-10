@@ -53,12 +53,6 @@ add_library(${PSA_TARGET_CLIENT_PARTITION_LIB} STATIC ${PARTITION_IPC_CLIENT_SRC
 # Create Server partition library
 add_library(${PSA_TARGET_SERVER_PARTITION_LIB} STATIC ${PARTITION_IPC_SERVER_SRC_C_SPE} ${SUITE_SERVER_CC_SRC_SPE})
 
-if(TARGET manifest_tool)
-	add_dependencies(${PSA_TARGET_DRIVER_PARTITION_LIB} manifest_tool)
-	add_dependencies(${PSA_TARGET_CLIENT_PARTITION_LIB} manifest_tool)
-	add_dependencies(${PSA_TARGET_SERVER_PARTITION_LIB} manifest_tool)
-endif()
-
 target_include_directories(${PSA_TARGET_DRIVER_PARTITION_LIB} PRIVATE
 	${CMAKE_CURRENT_BINARY_DIR}
 	${PSA_ROOT_DIR}/val/common
