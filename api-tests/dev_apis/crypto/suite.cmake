@@ -62,7 +62,3 @@ target_include_directories(${PSA_TARGET_TEST_COMBINE_LIB} PRIVATE
 	${PSA_ROOT_DIR}/platform/targets/${TARGET}/nspe
 	${PSA_SUITE_DIR}/common/
 )
-
-target_link_libraries(${PSA_TARGET_TEST_COMBINE_LIB} PRIVATE
-    psa_crypto_config
-)
