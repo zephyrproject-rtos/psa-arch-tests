@@ -20,7 +20,6 @@
 
 (START)
 
-test_c016
 test_c001
 test_c002
 test_c003
@@ -36,6 +35,7 @@ test_c012
 test_c013
 test_c014
 test_c015
+test_c016
 test_c017
 test_c018
 test_c019
