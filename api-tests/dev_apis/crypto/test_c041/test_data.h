@@ -30,7 +30,7 @@ typedef struct {
     size_t                  signature_size;
     const uint8_t          *expected_signature;
     size_t                  expected_signature_length;
-    psa_status_t            expected_status;
+    psa_status_t            expected_status[2];
 } test_data;
 
 static const test_data check1[] = {
@@ -49,7 +49,7 @@ static const test_data check1[] = {
     .signature_size            = BUFFER_SIZE,
     .expected_signature        = signature_1,
     .expected_signature_length = 128,
-    .expected_status           = PSA_SUCCESS,
+    .expected_status           = {PSA_SUCCESS,PSA_SUCCESS},
 },
 #endif
 
@@ -68,7 +68,7 @@ static const test_data check1[] = {
     .signature_size            = BUFFER_SIZE,
     .expected_signature        = signature_2,
     .expected_signature_length = 128,
-    .expected_status           = PSA_SUCCESS,
+    .expected_status           = {PSA_SUCCESS,PSA_SUCCESS},
 },
 #endif
 #endif
@@ -90,7 +90,7 @@ static const test_data check1[] = {
     .signature_size            = BUFFER_SIZE,
     .expected_signature        = signature_3,
     .expected_signature_length = 64,
-    .expected_status           = PSA_SUCCESS,
+    .expected_status           = {PSA_SUCCESS,PSA_SUCCESS},
 },
 #endif
 #endif
@@ -110,7 +110,7 @@ static const test_data check1[] = {
     .signature_size            = 128,
     .expected_signature        = NULL,
     .expected_signature_length = 0,
-    .expected_status           = PSA_ERROR_INVALID_ARGUMENT,
+    .expected_status           = {PSA_ERROR_INVALID_ARGUMENT,PSA_ERROR_INVALID_ARGUMENT},
 },
 
 {
@@ -126,7 +126,7 @@ static const test_data check1[] = {
     .signature_size            = 127,
     .expected_signature        = signature_1,
     .expected_signature_length = 128,
-    .expected_status           = PSA_ERROR_BUFFER_TOO_SMALL,
+    .expected_status           = {PSA_ERROR_BUFFER_TOO_SMALL,PSA_ERROR_BUFFER_TOO_SMALL}
 },
 #endif
 
@@ -143,7 +143,7 @@ static const test_data check1[] = {
     .signature_size            = BUFFER_SIZE,
     .expected_signature        = NULL,
     .expected_signature_length = 0,
-    .expected_status           = PSA_ERROR_INVALID_ARGUMENT,
+    .expected_status           = {PSA_ERROR_INVALID_ARGUMENT,PSA_ERROR_NOT_SUPPORTED}
 },
 #endif
 
@@ -162,7 +162,7 @@ static const test_data check1[] = {
     .signature_size            = BUFFER_SIZE,
     .expected_signature        = NULL,
     .expected_signature_length = 0,
-    .expected_status           = PSA_ERROR_INVALID_ARGUMENT,
+    .expected_status           = {PSA_ERROR_INVALID_ARGUMENT,PSA_ERROR_INVALID_ARGUMENT},
 },
 #endif
 #endif
@@ -183,7 +183,7 @@ static const test_data check1[] = {
     .signature_size            = BUFFER_SIZE,
     .expected_signature        = NULL,
     .expected_signature_length = 0,
-    .expected_status           = PSA_ERROR_NOT_PERMITTED,
+    .expected_status           = {PSA_ERROR_NOT_PERMITTED,PSA_ERROR_NOT_PERMITTED},
 },
 #endif
 
@@ -202,7 +202,7 @@ static const test_data check1[] = {
     .signature_size            = BUFFER_SIZE,
     .expected_signature        = NULL,
     .expected_signature_length = 0,
-    .expected_status           = PSA_ERROR_INVALID_ARGUMENT,
+    .expected_status           = {PSA_ERROR_INVALID_ARGUMENT,PSA_ERROR_INVALID_ARGUMENT},
 },
 #endif
 #endif
