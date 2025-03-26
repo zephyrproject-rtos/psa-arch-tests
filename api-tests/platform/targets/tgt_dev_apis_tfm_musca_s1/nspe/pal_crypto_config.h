@@ -66,6 +66,10 @@
 #endif
 #endif
 
+/* curves of size <255 are obsolete algorithms, should be disabled. */
+#undef ARCH_TEST_ECC_CURVE_SECP192R1
+#undef ARCH_TEST_ECC_CURVE_SECP224R1
+
 /**
  * \def ARCH_TEST_AES
  *
@@ -282,6 +286,9 @@
 //#define ARCH_TEST_SHA3_384
 //#define ARCH_TEST_SHA3_512
 
+// SHA224 is not in our scope of testing
+#undef ARCH_TEST_SHA224
+
 /**
  * \def ARCH_TEST_HKDF
  *
@@ -384,6 +391,14 @@
  * Enable ECC support for asymmetric API.
 */
 //#define ARCH_TEST_ECC_ASYMMETRIC_API_SUPPORT
+
+/**
+ * \def ARCH_TEST_PBKDF2
+ *
+ * Enable the Password-based Key derivation functions - 2.
+*/
+#define ARCH_TEST_PBKDF2
+
 #include "pal_crypto_config_check.h"
 
 #endif /* _PAL_CRYPTO_CONFIG_H_ */
