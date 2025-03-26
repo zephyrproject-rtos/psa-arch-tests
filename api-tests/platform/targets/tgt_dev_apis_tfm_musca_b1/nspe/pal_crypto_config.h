@@ -66,6 +66,10 @@
 #endif
 #endif
 
+/* curves of size <255 are obsolete algorithms, should be disabled. */
+#undef ARCH_TEST_ECC_CURVE_SECP192R1
+#undef ARCH_TEST_ECC_CURVE_SECP224R1
+
 /**
  * \def ARCH_TEST_AES
  *
@@ -281,6 +285,9 @@
 //#define ARCH_TEST_SHA3_256
 //#define ARCH_TEST_SHA3_384
 //#define ARCH_TEST_SHA3_512
+
+// SHA224 is not in our scope of testing
+#undef ARCH_TEST_SHA224
 
 /**
  * \def ARCH_TEST_HKDF
