@@ -77,9 +77,12 @@ int32_t psa_sign_hash_test(caller_security_t caller __UNUSED)
                                       check1[i].signature,
                                       check1[i].signature_size,
                                       &get_signature_length);
-        TEST_ASSERT_EQUAL(status, check1[i].expected_status, TEST_CHECKPOINT_NUM(4));
+        TEST_ASSERT_DUAL(status,
+                         check1[i].expected_status[0],
+                         check1[i].expected_status[1],
+                         TEST_CHECKPOINT_NUM(4));
 
-        if (check1[i].expected_status != PSA_SUCCESS)
+        if (check1[i].expected_status[0] != PSA_SUCCESS)
         {
             /* Destroy the key */
             status = val->crypto_function(VAL_CRYPTO_DESTROY_KEY, key);
