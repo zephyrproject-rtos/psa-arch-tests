@@ -122,14 +122,14 @@ int32_t psa_asymmetric_decrypt_test(caller_security_t caller __UNUSED)
 
 int32_t psa_asymmetric_decrypt_negative_test(caller_security_t caller __UNUSED)
 {
-    int32_t                 status;
-    size_t                  get_output_length;
-    psa_key_id_t            key = 1;
-
     if (valid_test_input_index < 0)
         return RESULT_SKIP(VAL_STATUS_NO_TESTS);
 
 #if defined(ARCH_TEST_RSA_1024) || defined(ARCH_TEST_RSA_PKCS1V15_CRYPT)
+    int32_t                 status;
+    size_t                  get_output_length;
+    psa_key_id_t            key = 1;
+
     /* Initialize the PSA crypto library*/
     status = val->crypto_function(VAL_CRYPTO_INIT);
     TEST_ASSERT_EQUAL(status, PSA_SUCCESS, TEST_CHECKPOINT_NUM(1));
