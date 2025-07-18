@@ -71,7 +71,7 @@ static const test_data check1[] = {
 #endif
 
 #ifdef ARCH_TEST_SHA256
-#ifdef ARCH_TEST_DETERMINISTIC_ECDSA
+#if defined(ARCH_TEST_DETERMINISTIC_ECDSA) || defined(ARCH_TEST_ECDSA)
 #ifdef ARCH_TEST_ECC_CURVE_SECP256R1
 {
     .test_desc        = "Test psa_verify_hash - ECDSA KEY_PAIR SECP256R1 SHA-256\n",
