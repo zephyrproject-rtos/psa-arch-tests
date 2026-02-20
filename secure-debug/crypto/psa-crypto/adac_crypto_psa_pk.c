@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2023, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2023-2026, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,7 +28,7 @@ static const uint8_t f4[] = {0x02, 0x03, 0x01, 0x00, 0x01};
 #ifdef PSA_ADAC_RSA3072
 static const uint8_t rsa3072_header[] = {0x30, 0x82, 0x01, 0x89, 0x02, 0x82, 0x01, 0x80, 0x00};
 
-psa_status_t load_rsa_3072_public_key(uint8_t *key, size_t key_size, psa_key_handle_t *handle)
+psa_status_t load_rsa_3072_public_key(uint8_t *key, size_t key_size, psa_key_id_t *handle)
 {
     psa_status_t ret;
 
@@ -72,7 +72,7 @@ psa_status_t load_rsa_3072_public_key(uint8_t *key, size_t key_size, psa_key_han
 #ifdef PSA_ADAC_RSA4096
 static const uint8_t rsa4096_header[] = {0x30, 0x82, 0x02, 0x09, 0x02, 0x82, 0x02, 0x00, 0x00};
 
-psa_status_t load_rsa_4096_public_key(uint8_t *key, size_t key_size, psa_key_handle_t *handle)
+psa_status_t load_rsa_4096_public_key(uint8_t *key, size_t key_size, psa_key_id_t *handle)
 {
     psa_status_t ret;
 
@@ -115,7 +115,7 @@ psa_status_t load_rsa_4096_public_key(uint8_t *key, size_t key_size, psa_key_han
 
 #ifdef PSA_ADAC_EC_P256
 
-psa_status_t load_ecdsa_p256_public_key(uint8_t *key, size_t key_size, psa_key_handle_t *handle)
+psa_status_t load_ecdsa_p256_public_key(uint8_t *key, size_t key_size, psa_key_id_t *handle)
 {
     psa_status_t ret;
 
@@ -145,7 +145,7 @@ psa_status_t load_ecdsa_p256_public_key(uint8_t *key, size_t key_size, psa_key_h
 
 #ifdef PSA_ADAC_EC_P521
 
-psa_status_t load_ecdsa_p521_public_key(uint8_t *key, size_t key_size, psa_key_handle_t *handle)
+psa_status_t load_ecdsa_p521_public_key(uint8_t *key, size_t key_size, psa_key_id_t *handle)
 {
     psa_status_t ret;
 
@@ -172,7 +172,7 @@ psa_status_t load_ecdsa_p521_public_key(uint8_t *key, size_t key_size, psa_key_h
 #endif
 
 psa_status_t psa_adac_load_public_key(uint8_t key_type, uint8_t *key, size_t key_size,
-                                      psa_key_handle_t *handle)
+                                      psa_key_id_t *handle)
 {
     psa_status_t ret = PSA_ERROR_NOT_SUPPORTED;
 
@@ -211,7 +211,7 @@ psa_status_t psa_adac_verify_signature(uint8_t key_type, uint8_t *key, size_t ke
     // cppcheck-suppress misra-c2012-18.8
     uint8_t hash[PSA_HASH_MAX_SIZE];
     size_t hash_size;
-    psa_key_handle_t handle;
+    psa_key_id_t handle;
     psa_status_t ret;
 
     if ((PSA_ALG_IS_VENDOR_DEFINED(sig_algo) != 0) ||

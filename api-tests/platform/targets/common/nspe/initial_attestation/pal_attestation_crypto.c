@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2023, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2026, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +20,7 @@
 #define PSA_ALG_MD4 ((psa_algorithm_t)0x02000002)
 
 static uint32_t         public_key_registered;
-static psa_key_handle_t public_key_handle;
+static psa_key_id_t     public_key_handle;
 
 static inline struct q_useful_buf_c useful_buf_head(struct q_useful_buf_c buf,
                                                   size_t amount)

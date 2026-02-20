@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2023, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2023-2026, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,7 +27,7 @@ psa_status_t psa_adac_mac_verify(psa_algorithm_t alg, const uint8_t *inputs[], s
     psa_status_t ret = PSA_ERROR_NOT_SUPPORTED;
     psa_algorithm_t algo;
     psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;
-    psa_key_handle_t handle;
+    psa_key_id_t handle;
     size_t bits;
 
     if (alg == PSA_ALG_CMAC) {
@@ -70,7 +70,7 @@ psa_status_t psa_adac_mac_verify(psa_algorithm_t alg, const uint8_t *inputs[], s
 psa_status_t psa_adac_derive_hmac(uint8_t *key, uint8_t *info, size_t size, uint8_t *output)
 {
     psa_algorithm_t algo = PSA_ALG_HKDF(PSA_ALG_SHA_256);
-    psa_key_handle_t handle;
+    psa_key_id_t handle;
 
     psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;
     psa_set_key_usage_flags(&attributes, 0);
@@ -116,7 +116,7 @@ psa_status_t psa_adac_derive_cmac(uint8_t *key, uint8_t *context, size_t context
                                   uint8_t *output)
 {
     psa_algorithm_t algo = PSA_ALG_CMAC;
-    psa_key_handle_t handle;
+    psa_key_id_t handle;
     size_t l = 0;
     uint8_t info[16] = {
             // Label = 'PSA ADAC 1.0'
@@ -201,7 +201,7 @@ psa_status_t psa_adac_verify_mac(uint8_t key_type, uint8_t *key, size_t key_size
                                  psa_algorithm_t mac_algo, uint8_t *mac, size_t mac_size)
 {
     psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;
-    psa_key_handle_t handle = -1;
+    psa_key_id_t handle = -1;
     psa_status_t ret = PSA_ERROR_NOT_SUPPORTED;
     psa_key_type_t type = 0;
     size_t bits = 0;

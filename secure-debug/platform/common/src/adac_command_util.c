@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2021-2023, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2021-2026, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -98,7 +98,7 @@ uint8_t get_certificate_role(psa_tlv_t *extns_list[], size_t extn_count)
     return role_type;
 }
 
-psa_status_t psa_adac_get_private_key(const char *key_file, uint8_t *type, psa_key_handle_t *handle,
+psa_status_t psa_adac_get_private_key(const char *key_file, uint8_t *type, psa_key_id_t *handle,
                                       uint8_t **key_ptr, size_t *size)
 {
     int ret_val;
@@ -289,7 +289,7 @@ psa_status_t psa_adac_send_certificate(psa_tlv_t **extns_list, size_t extns_coun
 psa_status_t psa_adac_construct_token(uint8_t challenge[], size_t challenge_size,
                                       uint8_t sign_type, uint8_t exts[], size_t exts_size,
                                       uint8_t *fragment[], size_t *fragment_size, uint8_t *perm,
-                                      psa_key_handle_t handle, uint8_t *key, size_t key_size)
+                                      psa_key_id_t handle, uint8_t *key, size_t key_size)
 {
     psa_status_t r;
 

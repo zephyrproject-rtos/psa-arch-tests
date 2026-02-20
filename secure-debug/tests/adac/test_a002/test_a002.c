@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2021-2022 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2021-2026 Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -103,7 +103,7 @@ void test_entry(val_api_t *val_api)
 
     response_packet_release(response);
 
-    psa_key_handle_t handle;
+    psa_key_id_t handle;
     uint8_t *key = NULL;
     size_t key_size = 0;
 
