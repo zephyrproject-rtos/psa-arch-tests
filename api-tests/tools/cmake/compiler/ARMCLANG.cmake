@@ -64,6 +64,6 @@ elseif(${CPU_ARCH} STREQUAL armv8a)
     set(TARGET_SWITCH "-march=armv8-a")
 endif()
 
-set(CMAKE_C_FLAGS              "--target=arm-arm-none-eabi ${TARGET_SWITCH} -g -Wall -Werror -Wextra -fshort-enums -fshort-wchar -funsigned-char -fdata-sections -ffunction-sections -mno-unaligned-access -mfpu=none")
+set(CMAKE_C_FLAGS              "--target=arm-arm-none-eabi ${TARGET_SWITCH} -g -Wall -Werror -Wextra -funsigned-char -fdata-sections -ffunction-sections -mno-unaligned-access -mfpu=none")
 set(CMAKE_ASM_FLAGS            "${TARGET_SWITCH} -mthumb")
 set(CMAKE_EXE_LINKER_FLAGS     "--strict --map --symbols --xref  --info=summarysizes,sizes,totals,unused,veneers --diag_warning=L6204")
