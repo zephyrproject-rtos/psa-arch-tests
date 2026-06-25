@@ -2,7 +2,7 @@
  * Copyright (c) 2019-2020, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
- * Copyright 2025 NXP
+ * Copyright 2025-2026 NXP
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -95,5 +95,7 @@
 /* psa/initial_attestation.h: Contains the PSA Initial Attestation API elements */
 #include "psa/initial_attestation.h"
 #endif
+
+extern int tfm_log_printf(const char *, ...);
 
 #endif /* _PAL_CONFIG_H_ */

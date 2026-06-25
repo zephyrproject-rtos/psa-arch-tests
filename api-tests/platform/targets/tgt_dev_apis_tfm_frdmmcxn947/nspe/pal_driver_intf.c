@@ -2,7 +2,7 @@
  * Copyright (c) 2019-2020, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
- * Copyright 2025 NXP
+ * Copyright 2025-2026 NXP
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -44,7 +44,7 @@ int pal_uart_init_ns(uint32_t uart_base_addr)
 
 int pal_print_ns(const char *str, int32_t data)
 {
-    printf(str, data);
+    tfm_log_printf(str, data);
     return PAL_STATUS_SUCCESS;
 }
 
